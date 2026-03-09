@@ -1,7 +1,6 @@
 import asyncio
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
-<<<<<<< HEAD
 from config import BOT_TOKEN, YC_FOLDER_ID, YC_API_KEY
 from yandex_semantic import YandexSemanticSearch
 
@@ -25,23 +24,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     welcome_text = """
 Добро пожаловать в бот семантического мониторинга Telegram!
 
-=======
-from bot_config import BOT_TOKEN
-
-
-user_prompts = {}
-
-prompt_counter = 1
-
-
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Приветствие и инструкция"""
-    welcome_text = """
-Добро пожаловать в бот семантического мониторинга Telegram!
-
-Я помогу вам отслеживать сообщения по интересующим темам.
-
->>>>>>> 4bc07833720b68cee6929815bd617467c5a04ba6
 Доступные команды:
 /subscribe <текст> - подписаться на тему
 /list - показать мои подписки
@@ -54,50 +36,21 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-<<<<<<< HEAD
     help_text = """
 Подробная инструкция
 
 Как это работает:
-=======
-    """Подробная инструкция"""
-    help_text = """
-**Подробная инструкция**
-
-    **Как это работает**
->>>>>>> 4bc07833720b68cee6929815bd617467c5a04ba6
 1. Вы создаете подписку с описанием темы
 2. Бот слушает все сообщения в Telegram
 3. При нахождении похожего сообщения - вы получаете уведомление
 
-<<<<<<< HEAD
 Команды:
-=======
-    **Советы по составлению промптов**
-• Будьте конкретны: "Python новости 2024" лучше чем "Python"
-• Используйте ключевые слова: "сроки сдачи отчетности"
-• Можно искать упоминания компаний: "ООО Ромашка"
-
-    **Примеры хороших промптов**
-• упоминания компании ООО "Ромашка"
-• сроки сдачи отчетности до 31 декабря
-• договоренности о встрече с клиентами
-• Python вакансии удаленная работа
-
-    **Если не приходят уведомления**
-• Проверьте /list - активны ли подписки
-• Уточните промпт - слишком общие запросы могут не сработать
-• Сообщения могут быть в каналах, где не состоит бот
-
-    **Команды:**
->>>>>>> 4bc07833720b68cee6929815bd617467c5a04ba6
 /start - начало работы
 /subscribe - создать подписку
 /list - мои подписки
 /remove - удалить подписку
 /help - эта справка
 """
-<<<<<<< HEAD
     await update.message.reply_text(help_text)
 
 
@@ -106,22 +59,6 @@ async def subscribe(update: Update, context: ContextTypes.DEFAULT_TYPE):
     username = update.effective_user.username or update.effective_user.first_name
     
     prompt = ' '.join(context.args)
-=======
-    await update.message.reply_text(help_text, parse_mode='Markdown')
-
-
-async def subscribe(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Создание новой подписки"""
-    global prompt_counter
-    user_id = update.effective_user.id
-    username = update.effective_user.username or update.effective_user.first_name
-    
-    print(f"DEBUG: context.args = {context.args}")
-    print(f"DEBUG: user_id = {user_id}")
-    
-    prompt = ' '.join(context.args)
-    print(f"DEBUG: prompt = '{prompt}'")
->>>>>>> 4bc07833720b68cee6929815bd617467c5a04ba6
     
     if not prompt:
         await update.message.reply_text(
@@ -136,7 +73,6 @@ async def subscribe(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return
     
-<<<<<<< HEAD
     if semantic_search:
         prompt_id = semantic_search.add_prompt(user_id, prompt)
         
@@ -163,36 +99,6 @@ async def list_prompts(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     
     prompts = semantic_search.get_user_prompts(user_id)
-=======
-    if user_id not in user_prompts:
-        user_prompts[user_id] = []
-        print(f"DEBUG: создан новый список для user_id {user_id}")
-    
-    prompt_id = prompt_counter
-    prompt_counter += 1
-    
-    user_prompts[user_id].append({
-        "id": prompt_id,
-        "text": prompt
-    })
-    
-    print(f"DEBUG: user_prompts = {user_prompts}")
-    
-    await update.message.reply_text(
-        f"Подписка создана!\n\n"
-        f"Промпт: {prompt}\n"
-        f"ID подписки: {prompt_id}\n\n"
-        f"Теперь я буду искать сообщения по этой теме и присылать вам уведомления."
-    )
-    
-    print(f"Новый пользователь {username} ({user_id}) подписался на: {prompt}")
-
-async def list_prompts(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Показать все подписки пользователя"""
-    user_id = update.effective_user.id
-    
-    prompts = user_prompts.get(user_id, [])
->>>>>>> 4bc07833720b68cee6929815bd617467c5a04ba6
     
     if not prompts:
         await update.message.reply_text(
@@ -201,11 +107,8 @@ async def list_prompts(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return
     
-<<<<<<< HEAD
     prompts.sort(key=lambda x: x['id'])
     
-=======
->>>>>>> 4bc07833720b68cee6929815bd617467c5a04ba6
     text = "Ваши подписки:\n\n"
     for p in prompts:
         text += f"{p['id']}. {p['text']}\n"
@@ -216,10 +119,6 @@ async def list_prompts(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def remove_prompt(update: Update, context: ContextTypes.DEFAULT_TYPE):
-<<<<<<< HEAD
-=======
-    """Удалить подписку по ID"""
->>>>>>> 4bc07833720b68cee6929815bd617467c5a04ba6
     user_id = update.effective_user.id
     
     if not context.args:
@@ -235,7 +134,6 @@ async def remove_prompt(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("Номер подписки должен быть числом")
         return
     
-<<<<<<< HEAD
     if not semantic_search:
         await update.message.reply_text("Ошибка: семантический поиск не инициализирован")
         return
@@ -244,22 +142,11 @@ async def remove_prompt(update: Update, context: ContextTypes.DEFAULT_TYPE):
     prompt_exists = any(p['id'] == prompt_id for p in user_prompts)
     
     if not prompt_exists:
-=======
-    prompts = user_prompts.get(user_id, [])
-    found = None
-    for p in prompts:
-        if p['id'] == prompt_id:
-            found = p
-            break
-    
-    if not found:
->>>>>>> 4bc07833720b68cee6929815bd617467c5a04ba6
         await update.message.reply_text(
             "Подписка с таким номером не найдена или не принадлежит вам"
         )
         return
     
-<<<<<<< HEAD
     removed = semantic_search.remove_prompt_by_id(prompt_id)
     
     if removed:
@@ -273,23 +160,6 @@ async def remove_prompt(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 def main():
-=======
-    user_prompts[user_id] = [p for p in prompts if p['id'] != prompt_id]
-    
-    await update.message.reply_text(
-        f"Подписка удалена:\n"
-        f"«{found['text']}»"
-    )
-
-
-async def notify_user(user_id: int, message_text: str, message_link: str):
-    """Функция для отправки уведомления пользователю"""
-    pass
-
-
-def main():
-    """Запуск бота"""
->>>>>>> 4bc07833720b68cee6929815bd617467c5a04ba6
     app = Application.builder().token(BOT_TOKEN).build()
     
     app.add_handler(CommandHandler("start", start))
@@ -298,7 +168,6 @@ def main():
     app.add_handler(CommandHandler("list", list_prompts))
     app.add_handler(CommandHandler("remove", remove_prompt))
     
-<<<<<<< HEAD
     print("=" * 50)
     print("БОТ ДЛЯ УВЕДОМЛЕНИЙ ЗАПУЩЕН")
     print("=" * 50)
@@ -324,10 +193,6 @@ def main():
     print("  /remove - удалить подписку")
     print("=" * 50)
     
-=======
-    print("Бот для уведомлений запущен!")
-    print("Доступные команды: /start, /help, /subscribe, /list, /remove")
->>>>>>> 4bc07833720b68cee6929815bd617467c5a04ba6
     app.run_polling()
 
 
