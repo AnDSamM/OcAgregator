@@ -1,6 +1,3 @@
-config.py
-.env
-
 *.session
 sessions/
 tdlib_data/
