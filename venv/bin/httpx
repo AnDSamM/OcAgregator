@@ -1,8 +1,15 @@
 #!/home/OcAgregator/venv/bin/python3
+<<<<<<< HEAD
 # -*- coding: utf-8 -*-
 import re
 import sys
 from httpx import main
 if __name__ == '__main__':
     sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
+=======
+import sys
+from httpx import main
+if __name__ == '__main__':
+    sys.argv[0] = sys.argv[0].removesuffix('.exe')
+>>>>>>> 4bc07833720b68cee6929815bd617467c5a04ba6
     sys.exit(main())
