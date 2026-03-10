@@ -1,6 +1,6 @@
 *.session
 sessions/
-tdlib_data/
+
 
 venv/
 .env
